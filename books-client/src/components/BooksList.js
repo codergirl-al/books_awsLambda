@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BookDataService from "../services/BookService";
 import { Link } from "react-router-dom";
-import Home from '../components/pages/Home';
+import Home from '../pages/Home';
 
 const BooksList = () => {
   const [books, setBooks] = useState([]);

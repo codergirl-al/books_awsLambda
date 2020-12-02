@@ -11,6 +11,9 @@ app.get("/", books.findAll);
 // Retrieve all published Book
 app.get("/published", books.findAllPublished);
 
+// Find by title
+app.get("/title:title", books.findByTitle);
+
 // Retrieve a single Book with id
 app.get("/:id", books.findOne);
 

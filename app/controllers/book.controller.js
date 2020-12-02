@@ -65,6 +65,22 @@ exports.findOne = (req, res) => {
       });
   };
 
+//Find by title
+exports.findByTitle = (req, res) => {
+  var regexp = new RegExp("^"+  req.params.title);
+  Book.find({ title: regexp})
+    .then(data => {
+      if (!data)
+        res.status(404).send({ message: "Not found Book with id " + id });
+      else res.send(data);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving Book with id=" + id });
+    });
+};
+
 // Update a Book by the id in the request
 exports.update = (req, res) => {
     if (!req.body) {

@@ -24,7 +24,7 @@ const AddBook = () => {
             description: book.description,
             author: book.author,
             rating: book.rating,
-            description: book.description,
+            published: book.published,
         };
 
         BookDataService.create(data)
@@ -91,7 +91,7 @@ const AddBook = () => {
                         <div className="form-group">
                             <label htmlFor="rating">Rating</label>
                             <input
-                                type="text"
+                                type="number"
                                 className="form-control"
                                 id="title"
                                 required

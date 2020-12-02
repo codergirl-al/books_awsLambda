@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import About from './components/pages/About';
+import About from './pages/About';
 import AddBook from "./components/AddBook";
 import Book from "./components/Book";
 import BooksList from "./components/BooksList";
@@ -41,6 +41,7 @@ class App extends Component {
             <Route exact path="/add" component={AddBook} />
             <Route path="/books/:id" component={Book} />
             <Route path="/about" component={About} />
+            <Redirect to="/" />
           </Switch>
         </div>
       </div>
