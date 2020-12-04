@@ -2,13 +2,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require('mongoose')
-const url = 'mongodb://localhost/books'
+const url = "mongodb+srv://booksDBUser:123dbuserpass321@books.vadfw.mongodb.net/<books>?retryWrites=true&w=majority"
 
 const app = express()
 
-
 //Connect to database
 mongoose.connect(url, {
+  useUnifiedTopology: true,
   useNewUrlParser: true
 }).then(() => {
   console.log('Database connected sucessfully !')
@@ -17,10 +17,6 @@ mongoose.connect(url, {
       console.log('Database could not be connected : ' + error)
   }
 )
-
-var corsOptions = {
-  origin: "http://localhost:8080"
-};
 
 app.use(cors());
 
