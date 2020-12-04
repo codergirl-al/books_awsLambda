@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import About from './pages/About';
 import AddBook from "./components/AddBook";
 import Book from "./components/Book";
 import BooksList from "./components/BooksList";
-
+import AddPublisher from "./components/AddPublisher";
+import PublishersList from "./components/PublishersList";
 
 class App extends Component {
   render() {
@@ -23,13 +23,18 @@ class App extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={"/add"} className="nav-link">
-                Add
+              <Link to={"/publishersList"} className="nav-link">
+                Publishers
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={"/about"} className="nav-link">
-                About
+              <Link to={"/add"} className="nav-link">
+                Add Book
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/addpublisher"} className="nav-link">
+                Add Publisher
               </Link>
             </li>
           </div>
@@ -38,9 +43,10 @@ class App extends Component {
         <div className="container mt-3">
           <Switch>
             <Route exact path={["/", "/books"]} component={BooksList} />
+            <Route path="/publishersList" component={PublishersList} />
             <Route exact path="/add" component={AddBook} />
+            <Route exact path="/addpublisher" component={AddPublisher} />
             <Route path="/books/:id" component={Book} />
-            <Route path="/about" component={About} />
             <Redirect to="/" />
           </Switch>
         </div>

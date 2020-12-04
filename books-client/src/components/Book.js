@@ -12,7 +12,7 @@ const Book = (props) => {
     pages: "",
     language: "",
     description: "",
-    publisher_id: "",
+    publisher: "",
     published: false,
   };
   const [currentBook, setCurrentBook] = useState(initialBookState);
@@ -47,7 +47,7 @@ const Book = (props) => {
       pages: currentBook.pages,
       language: currentBook.language,
       description: currentBook.description,
-      publisher_id: currentBook.publisher_id,
+      publisher: currentBook.publisher,
       published: status,
     };
 
@@ -176,7 +176,7 @@ const Book = (props) => {
             </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
-              <input
+              <textarea
                 type="text"
                 className="form-control"
                 id="description"
@@ -185,16 +185,10 @@ const Book = (props) => {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="publisher_id">Publisher:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="publisher_id"
-                name="publisher_id"
-                value={currentBook.publisher_id}
-                onChange={handleInputChange}
-              />
+            <div htmlFor="publisher.id">
+              <select className="form-control">
+                <option>Please choose a publisher</option>
+              </select>
             </div>
             <div className="form-group">
               <label>

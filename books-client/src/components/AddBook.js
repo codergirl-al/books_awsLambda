@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import BookDataService from "../services/BookService";
+import Select from "react-select";
 
 const AddBook = () => {
   const { register, handleSubmit, errors, formState } = useForm();
@@ -12,7 +13,7 @@ const AddBook = () => {
     pages: "",
     language: "",
     description: "",
-    publisher_id: "",
+    publisher: "",
     published: false,
   };
   const [book, setBook] = useState(initialBookState);
@@ -31,7 +32,7 @@ const AddBook = () => {
       pages: book.pages,
       language: book.language,
       description: book.description,
-      publisher_id: "",
+      publisher: "",
       published: book.published,
     };
 
@@ -45,7 +46,7 @@ const AddBook = () => {
           pages: response.data.pages,
           language: response.data.language,
           description: response.data.description,
-          publisher_id: response.data.publisher_id,
+          publisher: response.data.publisher,
           published: response.data.published,
         });
         setSubmitted(true);
@@ -69,13 +70,13 @@ const AddBook = () => {
       {submitted ? (
         <div>
           <h4>You submitted successfully!</h4>
-          <button className="btn btn-success" onClick={newBook}>
+          <button className="btn btn-primary" onClick={newBook}>
             Add
           </button>
         </div>
       ) : (
         <div>
-          <h1 className="text-center text-info">ADD BOOK</h1>
+          <h1 className="text-center text-info">Add Book</h1>
           <hr />
           <div className="form-group">
             <label htmlFor="title">
@@ -173,25 +174,15 @@ const AddBook = () => {
               name="description"
             />
           </div>
-          <div htmlFor="publisher.id">
-            <select className="form-control">
-              <option>Please choose a publisher</option>
-              {publishers &&
-                publishers.map((publisher, index) => (
-                  <option
-                    className={
-                      "list-group-item " +
-                      (index === currentIndex ? "active" : "")
-                    }
-                    onClick={() => setActivePublisher(publisher, index)}
-                    key={index}
-                  >
-                    {publisher.name}
-                  </option>
-                ))}
-            </select>
+          <div>
+            {/* <Select
+              value={multiselect}
+              onChange={setMultiselect}
+              isMulti
+              closeMenuOnSelect={false}
+              options={branchReducer.options ? branchReducer.options : null}
+            /> */}
           </div>
-          <br></br>
           <br></br>
           <button type="submit" className="btn btn-primary">
             Submit
