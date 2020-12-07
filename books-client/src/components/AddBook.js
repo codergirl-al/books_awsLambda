@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import BookDataService from "../services/BookService";
+import PublisherDataService from "../services/PublisherService";
 import Select from "react-select";
 
 const AddBook = () => {
@@ -65,6 +66,24 @@ const AddBook = () => {
     setBook(initialBookState);
     setSubmitted(false);
   };
+  const [options, setOptions] = useState([]);
+  useEffect(() => {
+    getOptions();
+  }, []);
+
+  const getOptions = () => {
+    PublisherDataService.getDropDown()
+      .then((response) => {
+        setOptions(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  //const options = PublisherDataService.getDropDown();
+
   return (
     <form className="submit-form" onSubmit={handleSubmit(onSubmit)}>
       {submitted ? (
@@ -175,13 +194,13 @@ const AddBook = () => {
             />
           </div>
           <div>
-            {/* <Select
-              value={multiselect}
-              onChange={setMultiselect}
-              isMulti
-              closeMenuOnSelect={false}
-              options={branchReducer.options ? branchReducer.options : null}
-            /> */}
+            <select className="form-control">
+              {options.map(({ label, value }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
           </div>
           <br></br>
           <button type="submit" className="btn btn-primary">

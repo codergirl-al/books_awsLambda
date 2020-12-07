@@ -9,7 +9,7 @@ exports.create = (req, res) => {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
-  // Create a Book object
+
   const book = new Book({
     title: req.body.title,
     author: req.body.author,
@@ -17,10 +17,8 @@ exports.create = (req, res) => {
     pages: req.body.pages,
     language: req.body.language,
     description: req.body.description,
-    //publisher: req.body.publisher,
     published: req.body.published ? req.body.published : false,
   });
-
   // Save Book in the database
   book
     .save(book)
@@ -51,20 +49,6 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Book.findById(id)
-    .then((data) => {
-      if (!data)
-        res.status(404).send({ message: "Not found Book with id " + id });
-      else res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({ message: "Error retrieving Book with id=" + id });
-    });
-};
-
-//Find by title
-exports.findByTitle = (req, res) => {
-  var regexp = new RegExp("^" + req.params.title);
-  Book.find({ title: regexp })
     .then((data) => {
       if (!data)
         res.status(404).send({ message: "Not found Book with id " + id });
@@ -134,19 +118,6 @@ exports.deleteAll = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Some error occurred while removing all books.",
-      });
-    });
-};
-
-// Find all published Books
-exports.findAllPublished = (req, res) => {
-  Book.find({ published: true })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving books.",
       });
     });
 };

@@ -10,9 +10,10 @@ module.exports = (mongoose) => {
       language: String,
       description: String,
       published: Boolean,
-      publisher: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "publishers!!" },
-      ],
+      publisher: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "publishers",
+      },
     },
     { timestamps: true }
   );

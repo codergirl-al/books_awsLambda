@@ -10,12 +10,6 @@ app.post("/books", books.create);
 // Retrieve all Book
 app.get("/books", books.findAll);
 
-// Retrieve all published Book
-app.get("/books/published", books.findAllPublished);
-
-// Find by title
-app.get("/books/title:title", books.findByTitle);
-
 // Retrieve a single Book with id
 app.get("/books/:id", books.findOne);
 
@@ -34,6 +28,8 @@ app.post("/publishers", publishers.create);
 
 // Retrieve all publishers
 app.get("/publishers", publishers.findAll);
+
+app.get("/publishersDropDown", publishers.getDropDown);
 
 // Retrieve a single publisher with id
 app.get("/publishers/:id", publishers.findOne);

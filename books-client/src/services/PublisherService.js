@@ -4,6 +4,10 @@ const getAll = () => {
   return http.get("/publishers");
 };
 
+const getDropDown = () => {
+  return http.get("/publishersDropDown");
+};
+
 const get = (id) => {
   return http.get(`/publishers/${id}`);
 };
@@ -19,6 +23,7 @@ const remove = (id) => {
 
 export default {
   getAll,
+  getDropDown,
   get,
   create,
   remove,

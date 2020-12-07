@@ -1,22 +1,26 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const mongoose = require('mongoose')
-const url = "mongodb+srv://booksDBUser:123dbuserpass321@books.vadfw.mongodb.net/<books>?retryWrites=true&w=majority"
+const mongoose = require("mongoose");
+const url =
+  "mongodb+srv://booksDBUser:123dbuserpass321@books.vadfw.mongodb.net/<books>?retryWrites=true&w=majority";
 
-const app = express()
+const app = express();
 
 //Connect to database
-mongoose.connect(url, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true
-}).then(() => {
-  console.log('Database connected sucessfully !')
-},
-  error => {
-      console.log('Database could not be connected : ' + error)
-  }
-)
+mongoose
+  .connect(url, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(
+    () => {
+      console.log("Database connected sucessfully !");
+    },
+    (error) => {
+      console.log("Database could not be connected : " + error);
+    }
+  );
 
 app.use(cors());
 
@@ -26,11 +30,11 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.json())
+app.use(express.json());
 
-const bookRouter = require('./routes/book.routes');
+const booksRouter = require("./routes/book.routes");
 const { books } = require("./models");
-app.use(bookRouter)
+app.use(booksRouter);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

@@ -1,15 +1,15 @@
 const db = require("../models");
 const Publisher = db.publishers;
+const Book = db.books;
 
 exports.create = (req, res) => {
   //Validate request
   const publisher = new Publisher({
-    _id: req.body.id,
+    id: req.body.id,
     name: req.body.name,
-    founded: req.body.founded,
     location: req.body.location,
+    books: Publisher.find().populate("books"),
   });
-
   publisher
     .save(publisher)
     .then((data) => {
@@ -29,6 +29,27 @@ exports.findAll = (req, res) => {
     .then((data) => {
       if (!data) res.status(404).send({ message: "Didn't find any Publisher" });
       else res.send(data);
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving Publisher with id= " + _id });
+    });
+};
+
+exports.getDropDown = (req, res) => {
+  Publisher.find()
+    .then((data) => {
+      if (!data) res.status(404).send({ message: "Didn't find any Publisher" });
+      else
+        res.send(
+          data.map((item) => {
+            return {
+              value: item._id,
+              label: item.name,
+            };
+          })
+        );
     })
     .catch((err) => {
       res
