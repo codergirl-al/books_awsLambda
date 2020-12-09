@@ -5,14 +5,16 @@ import Home from "../pages/Home";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import PublisherDataService from "../services/PublisherService";
 
 const BooksList = () => {
-  const [books, setBooks] = useState([]);
+  const [books, setBooks, publisherName, setPublisherName] = useState([]);
   const [currentBook, setCurrentBook] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
     retrieveBooks();
+    getPublisherById();
   }, []);
 
   const retrieveBooks = () => {
@@ -26,6 +28,12 @@ const BooksList = () => {
       });
   };
 
+  const getPublisherById = (id) => {
+    PublisherDataService.findPublisherName(id).then((response) => {
+      return response.data;
+    });
+  };
+
   const refreshList = () => {
     retrieveBooks();
     setCurrentBook(null);
@@ -33,8 +41,11 @@ const BooksList = () => {
   };
 
   const setActiveBook = (book, index) => {
-    setCurrentBook(book);
-    setCurrentIndex(index);
+    PublisherDataService.findPublisherName(book.publisher).then((response) => {
+      book.publisher = response.data;
+      setCurrentBook(book);
+      setCurrentIndex(index);
+    });
   };
 
   const removeAllBooks = () => {
@@ -52,19 +63,18 @@ const BooksList = () => {
     { dataField: "id", hidden: true },
     {
       dataField: "title",
-      text: "Book Title",
+      text: "Book Title ^",
       sort: true,
     },
     {
       dataField: "author",
-      text: "Author",
+      text: "Author ^",
       sort: true,
     },
   ];
 
   const tableRowEvents = {
     onClick: (e, row, rowIndex) => {
-      console.log(`clicked on row with index: ${row.data}`);
       setActiveBook(row, rowIndex);
     },
   };

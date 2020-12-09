@@ -34,7 +34,13 @@ app.get("/publishersDropDown", publishers.getDropDown);
 // Retrieve a single publisher with id
 app.get("/publishers/:id", publishers.findOne);
 
+// Find a publisher's name
+app.get("/books/publishers/:id", publishers.findPublisherName);
+
 // Delete a publisher with id
 app.delete("/publishers/:id", publishers.delete);
+
+//Retrieve all books published by a publisher
+app.get("/publishers/books/:id", publishers.getBooksByPublisherId);
 
 module.exports = app;

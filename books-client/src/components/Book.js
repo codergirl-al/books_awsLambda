@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import BookDataService from "../services/BookService";
+import PublisherDataService from "../services/PublisherService";
+import Select from "react-select";
+import { useHistory } from "react-router-dom";
 
 const Book = (props) => {
   const { register, handleSubmit, errors, formState } = useForm();
+  const [options, setOptions] = useState([]);
+  const history = useHistory();
+  useEffect(() => {
+    getOptions();
+  }, []);
   const initialBookState = {
     id: null,
     title: "",
@@ -12,7 +20,7 @@ const Book = (props) => {
     pages: "",
     language: "",
     description: "",
-    publisher: "",
+    publisher: {},
     published: false,
   };
   const [currentBook, setCurrentBook] = useState(initialBookState);
@@ -47,7 +55,7 @@ const Book = (props) => {
       pages: currentBook.pages,
       language: currentBook.language,
       description: currentBook.description,
-      publisher: currentBook.publisher,
+      publisher: options.value,
       published: status,
     };
 
@@ -55,6 +63,7 @@ const Book = (props) => {
       .then((response) => {
         setCurrentBook({ ...currentBook, published: status });
         console.log(response.data);
+        history.push("/books");
       })
       .catch((e) => {
         console.log(e);
@@ -66,6 +75,7 @@ const Book = (props) => {
       .then((response) => {
         console.log(response.data);
         setMessage("The book was updated successfully!");
+        history.push("/books");
       })
       .catch((e) => {
         console.log(e);
@@ -86,6 +96,17 @@ const Book = (props) => {
   const onSubmit = () => {
     if (formState.errors.data) return;
     updateBook();
+  };
+
+  const getOptions = () => {
+    PublisherDataService.getDropDown()
+      .then((response) => {
+        setOptions(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -185,10 +206,8 @@ const Book = (props) => {
                 onChange={handleInputChange}
               />
             </div>
-            <div htmlFor="publisher.id">
-              <select className="form-control">
-                <option>Please choose a publisher</option>
-              </select>
+            <div className="form-group">
+              <Select onChange={setOptions} options={options} />
             </div>
             <div className="form-group">
               <label>

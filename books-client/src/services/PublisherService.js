@@ -13,12 +13,19 @@ const get = (id) => {
 };
 
 const create = (data) => {
-  console.log("Erdhi ketu bucii");
   return http.post("/publishers", data);
 };
 
 const remove = (id) => {
   return http.delete(`/publishers/${id}`);
+};
+
+const findPublisherName = (id) => {
+  return http.get(`/books/publishers/${id}`);
+};
+
+const getBooksByPublisherId = (id) => {
+  return http.get(`/publishers/books/${id}`);
 };
 
 export default {
@@ -27,4 +34,6 @@ export default {
   get,
   create,
   remove,
+  findPublisherName,
+  getBooksByPublisherId,
 };

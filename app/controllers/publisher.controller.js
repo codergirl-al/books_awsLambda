@@ -58,6 +58,28 @@ exports.getDropDown = (req, res) => {
     });
 };
 
+exports.getBooksByPublisherId = (req, res) => {
+  const publisherId = req.params.id;
+  let books;
+  Book.find({ publisher: publisherId })
+    .then((data) => {
+      if (!data) res.status(404).send({ message: "Didn't find any Publisher" });
+      else
+        res.send(
+          data.map((book) => {
+            return {
+              title: book.title,
+            };
+          })
+        );
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving Publisher with id= " + _id });
+    });
+};
+
 // Find a single Publisher with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -95,5 +117,23 @@ exports.delete = (req, res) => {
       res.status(500).send({
         message: "Could not delete Publisher with id=" + id,
       });
+    });
+};
+
+exports.findPublisherName = (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  Publisher.findById(id)
+    .then((data) => {
+      if (!data)
+        res.status(404).send({ message: "Not found Publisher with id " + id });
+      else {
+        res.send(data.name);
+      }
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving Publisher with id=" + id });
     });
 };

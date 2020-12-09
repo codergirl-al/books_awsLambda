@@ -6,6 +6,7 @@ import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 
 const PublishersList = () => {
   const [publishers, setPublishers] = useState([]);
+  const [publisherBooks, setPublisherBooks] = useState([]);
   const [currentPublisher, setCurrentPublisher] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
@@ -31,20 +32,27 @@ const PublishersList = () => {
   };
 
   const setActivePublisher = (publisher, index) => {
-    setCurrentPublisher(publisher);
-    setCurrentIndex(index);
+    PublisherDataService.getBooksByPublisherId(publisher.id).then(
+      (response) => {
+        publisher.books = response.data;
+        console.log(publisher.books);
+
+        setCurrentPublisher(publisher);
+        setCurrentIndex(index);
+      }
+    );
   };
 
   const columns = [
     { dataField: "id", hidden: true },
     {
       dataField: "name",
-      text: "Publisher",
+      text: "Publisher ^",
       sort: true,
     },
     {
       dataField: "location",
-      text: "Location",
+      text: "Location ^",
       sort: true,
     },
   ];
@@ -55,6 +63,7 @@ const PublishersList = () => {
       setActivePublisher(row, rowIndex);
     },
   };
+
   const { SearchBar } = Search;
 
   return (
@@ -105,12 +114,14 @@ const PublishersList = () => {
                   </label>{" "}
                   {currentPublisher.location}
                 </div>
-                {/* <div>
+                <div>
                   <label>
                     <strong>Books:</strong>
                   </label>{" "}
-                  {currentPublisher.books}
-                </div> */}
+                  {currentPublisher.books.map((book, index) => (
+                    <p>{book.title}</p>
+                  ))}
+                </div>
               </div>
             ) : (
               <div>

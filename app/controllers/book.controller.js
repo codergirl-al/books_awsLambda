@@ -9,6 +9,7 @@ exports.create = (req, res) => {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
+  console.log(req.body.publisher);
 
   const book = new Book({
     title: req.body.title,
@@ -17,6 +18,7 @@ exports.create = (req, res) => {
     pages: req.body.pages,
     language: req.body.language,
     description: req.body.description,
+    publisher: req.body.publisher,
     published: req.body.published ? req.body.published : false,
   });
   // Save Book in the database

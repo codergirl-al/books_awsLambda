@@ -11,7 +11,7 @@ module.exports = (mongoose) => {
       description: String,
       published: Boolean,
       publisher: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: "publishers",
       },
     },
