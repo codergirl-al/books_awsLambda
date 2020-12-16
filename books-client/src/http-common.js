@@ -1,10 +1,20 @@
 import axios from "axios";
-
-export default axios.create({
-  baseURL: "http://localhost:8080",
-  headers: {
-    "Content-type": "application/json",
-  },
-});
+import { Auth } from "aws-amplify";
 
 axios.defaults.port = 8080;
+
+const instance = axios.create({
+  baseURL: "https://x1sv16kkt0.execute-api.eu-west-1.amazonaws.com/dev/",
+});
+
+instance.interceptors.request.use(async function (config) {
+  const session = await Auth.currentSession();
+  let idToken = session.getIdToken();
+
+  let jwt = idToken.getJwtToken();
+
+  config.headers.Authorization = jwt;
+
+  return config;
+});
+export default instance;

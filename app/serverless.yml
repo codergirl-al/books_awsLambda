@@ -1,4 +1,4 @@
-service: lambda-app
+service: books-lib
 frameworkVersion: "2"
 
 provider:
@@ -6,10 +6,14 @@ provider:
   runtime: nodejs12.x
   region: eu-west-1
 functions:
-  hello:
-    handler: handler.hello
+  app:
+    handler: app.app
     events:
       - http:
           path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{proxy+}
           method: ANY
           cors: true

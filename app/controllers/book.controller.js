@@ -5,6 +5,10 @@ const Publisher = db.publishers;
 // Create and Save a new Book
 exports.create = (req, res) => {
   // Validate request
+  console.log(req.headers.authorization);
+  if (!req.headers.authorization) {
+    return res.status(403).json({ error: "No credentials sent!" });
+  }
   if (!req.body.title) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
@@ -105,21 +109,6 @@ exports.delete = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: "Could not delete Book with id=" + id,
-      });
-    });
-};
-
-// Delete all Books from the database.
-exports.deleteAll = (req, res) => {
-  Book.remove({})
-    .then((data) => {
-      res.send({
-        message: `${data.deletedCount}  Books were deleted successfully!`,
-      });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while removing all books.",
       });
     });
 };

@@ -83,9 +83,6 @@ const AddBook = () => {
   return (
     <form className="submit-form" onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <h4>You submitted successfully!</h4>
-      </div>
-      <div>
         <h1 className="text-center text-info">Add Book</h1>
         <hr />
         <div className="form-group">
@@ -185,6 +182,7 @@ const AddBook = () => {
           />
         </div>
         <div>
+          <label htmlFor="publisher">Publisher</label>
           <Select
             onChange={setOptions}
             options={options}

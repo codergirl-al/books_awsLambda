@@ -19,9 +19,6 @@ app.put("/books/:id", books.update);
 // Delete a Book with id
 app.delete("/books/:id", books.delete);
 
-// Create a new Book
-app.delete("/books/", books.deleteAll);
-
 // publisher routes
 
 app.post("/publishers", publishers.create);

@@ -48,17 +48,6 @@ const BooksList = () => {
     });
   };
 
-  const removeAllBooks = () => {
-    BookDataService.removeAll()
-      .then((response) => {
-        console.log(response.data);
-        refreshList();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   const columns = [
     { dataField: "id", hidden: true },
     {
@@ -120,12 +109,6 @@ const BooksList = () => {
                   </div>
                 )}
               </ToolkitProvider>
-              <button
-                className="m-3 btn btn-sm btn-danger"
-                onClick={removeAllBooks}
-              >
-                Remove All
-              </button>
             </div>
             <div className="col-md-6">
               {currentBook ? (
