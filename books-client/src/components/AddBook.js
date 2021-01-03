@@ -151,8 +151,8 @@ const AddBook = () => {
             name="pages"
           />
           <span className="text-danger">
-            {errors.pages?.type == "required" && "Pages is required"}
-            {errors.pages?.type == "min" &&
+            {errors.pages?.type === "required" && "Pages is required"}
+            {errors.pages?.type === "min" &&
               "Please add a positive number for pages."}
           </span>
         </div>
@@ -183,11 +183,7 @@ const AddBook = () => {
         </div>
         <div>
           <label htmlFor="publisher">Publisher</label>
-          <Select
-            onChange={setOptions}
-            options={options}
-            onChange={setOptions}
-          />
+          <Select onChange={setOptions} options={options} />
         </div>
         <br></br>
         <button type="submit" className="btn btn-primary">

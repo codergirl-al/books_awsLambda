@@ -5,15 +5,97 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+      Resource: "*"
+plugins:
+  - serverless-offline
 functions:
-  app:
-    handler: app.app
+  #=====BOOKS=====
+  addBook:
+    handler: books.add
     events:
       - http:
-          path: /
-          method: ANY
+          path: /books/
+          method: post
           cors: true
+  updateBook:
+    handler: books.updatebook
+    events:
       - http:
-          path: /{proxy+}
-          method: ANY
+          path: /books/{id}
+          method: put
           cors: true
+  deleteBook:
+    handler: books.deletebook
+    events:
+      - http:
+          path: /books/{id}
+          method: delete
+          cors: true
+  getBooks:
+    handler: books.getbooks
+    events:
+      - http:
+          path: /books
+          method: get
+          cors: true
+  getBookById:
+    handler: books.getbookbyid
+    events:
+      - http:
+          path: /books/{id}
+          method: get
+          cors: true
+  #=====PUBLISHERS=====
+  addPublisher:
+    handler: publishers.addpublisher
+    events:
+      - http:
+          path: /publishers/
+          method: post
+          cors: true
+  getPublishers:
+    handler: publishers.getpublishers
+    events:
+      - http:
+          path: /publishers
+          method: get
+          cors: true
+  getPublisherById:
+    handler: publishers.getpublisherbyid
+    events:
+      - http:
+          path: /publishers/{id}
+          method: get
+          cors: true
+  getBooksByPublisherId:
+    handler: publishers.getbooksbypublisherid
+    events:
+      - http:
+          path: /publishers/books/{id}
+          method: get
+          cors: true
+  getDropDown:
+    handler: publishers.getdropdown
+    events:
+      - http:
+          path: /publishersDropDown
+          method: get
+          cors: true
+  getPublisherName:
+    handler: publishers.getpublishername
+    events:
+      - http:
+          path: /books/publishers/{id}
+          method: get
+          cors: true
+  newUserNotify:
+    handler: userNotify.newUserNotify
+    events:
+      - cognitoUserPool:
+          pool: bookslib67c9c5db_userpool_67c9c5db-dev
+          trigger: PostConfirmation
+          existing: true

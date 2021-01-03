@@ -16,10 +16,6 @@ const create = (data) => {
   return http.post("/publishers", data);
 };
 
-const remove = (id) => {
-  return http.delete(`/publishers/${id}`);
-};
-
 const findPublisherName = (id) => {
   return http.get(`/books/publishers/${id}`);
 };
@@ -33,7 +29,6 @@ export default {
   getDropDown,
   get,
   create,
-  remove,
   findPublisherName,
   getBooksByPublisherId,
 };
